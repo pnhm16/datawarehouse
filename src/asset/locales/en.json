@@ -1,0 +1,18 @@
+{
+    "canhBao": "Cảnh báo",
+    "banCoMuonThoatKhoiUngDung": "Bạn có muốn thoát khỏi ứng dụng?",
+    "co": "Có",
+    "huyBo": "Huỷ bỏ",
+    "vanBanNayDaDuocCopy": "Văn bản này đã được copy",
+    "Home": "Home",
+    "Favorites": "Favorites",
+    "Recent": "Recent",
+    "Dataset": "Dataset",
+    "User Management": "User Management",
+    "Workspaces":"Workspaces",
+    "Setting": "Setting",
+    "Logout":"Logout",
+    "Setting.vi": "Vietnamese",
+    "Setting.en": "English",
+    "Hi, Welcome back": "Chào mừng quay trở lại!"
+}
