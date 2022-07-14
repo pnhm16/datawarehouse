@@ -6,17 +6,20 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import CustomHeaderStack from "../../components/CustomHeader";
 import Feather from "react-native-vector-icons/Feather";
 import { useTranslation } from "react-i18next";
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { resetWorkspaces, getWorkspacesAction } from '../../store/actions/workspacesAction';
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import {
+  resetWorkspaces,
+  getWorkspacesAction,
+} from "../../store/actions/workspacesAction";
 import { clockRunning } from "react-native-reanimated";
-
-
+import { useIsFocused } from "@react-navigation/native";
+import { store } from "../../store/index";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 function WorkspaceScreen(props) {
@@ -24,41 +27,38 @@ function WorkspaceScreen(props) {
   const { workspaces, onGetWorkspacesData } = props;
   const { workspacesData } = workspaces;
   const { t } = useTranslation();
-
+  const isFocused = useIsFocused();
   useEffect(() => {
     onGetWorkspacesData();
-    console.log(workspacesData);
-  
-  }, []);
-
+  }, [isFocused]);
+  console.log({ workspacesData });
 
   return (
     <ScrollView style={styles.container}>
       <View style={{ height: 50 }}>
         <CustomHeaderStack {...props} />
       </View>
-      
-      <View style={styles.body}> 
-        <View style={styles.title}>
-            <Feather name="layers" size={20} color={"#673ab7"} />
-            <Text style={styles.textTitle}>  Workspaces</Text>
-        </View>
-      <TouchableOpacity> 
-        <View style={styles.title}>
 
-            {workspacesData.map(workspaces => (
-              <li key = {workspaces.id}>
-                {workspaces.title}
-              </li>
+      <View style={styles.body}>
+        <View style={styles.title}>
+          <Feather name="layers" size={20} color={"#673ab7"} />
+          <Text style={styles.textTitle}> Workspaces</Text>
+        </View>
+        <TouchableOpacity>
+          <View style={styles.title}>
+            {workspacesData.map((workspaces, index) => (
+              <View key={index}>
+                <Text>{workspaces.name}</Text>
+                <Text>{workspaces.description}</Text>
+              </View>
             ))}
-
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity> 
-        <View style={styles.title}>
-          <Text style={styles.textTitle}>  </Text>
-        </View>
-      </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+        {/* <TouchableOpacity>
+          <View style={styles.title}>
+            <Text style={styles.textTitle}> </Text>
+          </View>
+        </TouchableOpacity> */}
       </View>
     </ScrollView>
   );
@@ -67,6 +67,7 @@ function WorkspaceScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 50,
   },
   body: {
     flex: 1,
@@ -96,14 +97,13 @@ WorkspaceScreen.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  workspaces: state.workspaces
+  workspaces: state.workspaces,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   resetWorkspaces: () => dispatch(resetWorkspaces()),
-  onGetWorkspacesData: () => dispatch(getWorkspacesAction())
+  onGetWorkspacesData: () => dispatch(getWorkspacesAction()),
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 export default compose(withConnect)(WorkspaceScreen);
-

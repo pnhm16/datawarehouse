@@ -8,15 +8,16 @@ import {
   TextInput,
   Image,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CustomHeaderStack from "../../components/CustomHeader";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
 import Entypo from "react-native-vector-icons/Entypo";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { getDatasetsAction } from "../../store/actions/datasetAction";
-import { connect } from 'react-redux';
-import { compose } from 'redux';
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { useIsFocused } from "@react-navigation/native";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -24,36 +25,35 @@ const windowHeight = Dimensions.get("window").height;
 function DataScreen(props) {
   // console.log('props', props);
   const { datasets, onGetDatasetsData } = props;
-  const { datasetsData } = datasets;
-  const { t } = useTranslation();
+  // const { datasetsData } = datasets;
+  // const { t } = useTranslation();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     onGetDatasetsData();
     // console.log(datasetsData);
-  
-  }, []);
+  }, [isFocused]);
 
-const data = [
-  {
-    // datasetsData.map(datasets => (
-    //   <li key = {datasets.id}>
-    //     {datasets.title}
-    //   </li>
-    // ))
-  },
-  {
-    id: 2,
-    name: "data_User",
-  },
-  {
-    id: 3,
-    name: "data_Product",
-  },
-];
-
+  const data = [
+    {
+      // datasetsData.map(datasets => (
+      //   <li key = {datasets.id}>
+      //     {datasets.title}
+      //   </li>
+      // ))
+    },
+    {
+      id: 2,
+      name: "data_User",
+    },
+    {
+      id: 3,
+      name: "data_Product",
+    },
+  ];
 
   const [tab, setTab] = useState(0);
-  console.log('props.navigation',props.navigation)
+  // console.log("props.navigation", props.navigation);
   return (
     <ScrollView style={styles.container}>
       <View style={{ height: 50 }}>
@@ -76,11 +76,13 @@ const data = [
               This Workspace
             </Text>
           </View>
-          <TouchableOpacity onPress={() => props.navigation.navigate("NewDataset")}>
-          <View style={styles.buttonCreate}>
-            <Feather name="plus" size={20} color="#000" />
-            <Text>New</Text>
-          </View>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate("NewDataset")}
+          >
+            <View style={styles.buttonCreate}>
+              <Feather name="plus" size={20} color="#000" />
+              <Text>New</Text>
+            </View>
           </TouchableOpacity>
           <View style={styles.searchSection}>
             <Feather
@@ -118,26 +120,35 @@ const data = [
                   </View>
                 </View>
               </View>
-              {data.map((item) => {
-                return (
-                  <TouchableOpacity style={styles.layoutCenter} key={item.id}>
-                    <View style={styles.headerTable}>
-                      <View style={{ width: "10%" }}>
-                        <Image
-                          style={styles.imageItem}
-                          source={require("../../asset/images/icon_data_square.png")}
-                        />
-                      </View>
-                      <View style={{ width: "45%" }}>
-                        <Text style={styles.textTab}>{item.name}</Text>
-                      </View>
-                      <View style={{ width: "45%" }}>
-                        <Text style={styles.textTab}></Text>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                );
-              })}
+
+              {datasets && datasets.length ? (
+                <>
+                  {datasets.map((item) => {
+                    console.log({ item });
+                    return (
+                      <TouchableOpacity
+                        style={styles.layoutCenter}
+                        key={item.id}
+                      >
+                        <View style={styles.headerTable}>
+                          <View style={{ width: "10%" }}>
+                            <Image
+                              style={styles.imageItem}
+                              source={require("../../asset/images/icon_data_square.png")}
+                            />
+                          </View>
+                          <View style={{ width: "45%" }}>
+                            <Text style={styles.textTab}>{item.name}</Text>
+                          </View>
+                          <View style={{ width: "45%" }}>
+                            <Text style={styles.textTab}></Text>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </>
+              ) : null}
             </View>
           ) : null}
         </View>
@@ -149,6 +160,7 @@ const data = [
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 50,
   },
   body: {
     flex: 1,
@@ -184,7 +196,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   textTab: {
-    fontSize: 16,
+    fontSize: 12,
     margin: 10,
   },
   searchSection: {
@@ -238,15 +250,15 @@ const styles = StyleSheet.create({
 
 DataScreen.propTypes = {
   onGetDatasetsAction: PropTypes.func,
-  datasets: PropTypes.object,
+  datasets: PropTypes.array,
 };
 
 const mapStateToProps = (state) => ({
-  datasets: state.data
+  datasets: state.datasets?.datasetsData,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onGetDatasetsData: () => dispatch(getDatasetsAction())
+  onGetDatasetsData: () => dispatch(getDatasetsAction()),
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

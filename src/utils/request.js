@@ -1,4 +1,4 @@
-import axios from './axios';
+import axios from "./axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /**
@@ -51,10 +51,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
  *
  * @return {object}           The response data
  */
+
 export default function request(url, options) {
   const newHeaders = {
-    // Authorization: `Bearer ${AsyncStorage.getItem('token')}`,
-    ...options.headers
+    ...options.headers,
   };
   // eslint-disable-next-line no-param-reassign
   options.headers = newHeaders;

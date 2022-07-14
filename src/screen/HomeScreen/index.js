@@ -11,6 +11,7 @@ import CustomHeaderStack from "../../components/CustomHeader";
 import Feather from "react-native-vector-icons/Feather";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { useSelector } from "react-redux";
 
 const data = [
   {
@@ -43,6 +44,8 @@ const dataset = [
 ];
 
 export default function HomeScreen(props) {
+  const login = useSelector((state) => state.login);
+  console.log({ login });
   return (
     <ScrollView style={styles.container}>
       <View style={{ height: 65 }}>
@@ -130,6 +133,7 @@ export default function HomeScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 50,
   },
   body: {
     margin: 20,

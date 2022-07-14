@@ -26,21 +26,23 @@ import ShareScreen from "./ShareScreen";
 import QueryScreen from "./QueryScreen";
 import WorkspaceScreen from "./Workspace";
 import NewDataset from "./NewDataset";
-
+import { useDispatch, useSelector } from "react-redux";
+import { TOKEN } from "../store/constants/loginConstant";
 
 WebBrowser.maybeCompleteAuthSession();
 
 export default function MainScreen(props) {
   const { t } = useTranslation();
-  const [isLogin, setIsLogin] = React.useState(false);
-
-  console.log('props', props);
+  // const [isLogin, setIsLogin] = React.useState(false);
+  const { token: isLogin } = useSelector((state) => state.token);
+  console.log("props", props);
   const Drawer = createDrawerNavigator();
-  
+
   const Stack = createNativeStackNavigator();
-  
+  const dispatch = useDispatch();
+
   // const isLogin = AsyncStorage.setItem('token', data.access_token);
-  
+
   React.useEffect(() => {
     const backAction = () => {
       Alert.alert(t("canhBao"), t("banCoMuonThoatKhoiUngDung"), [
@@ -66,18 +68,19 @@ export default function MainScreen(props) {
 
     return () => backHandler.remove();
   }, []);
-
   React.useEffect(() => {
     const getToken = async () => {
       const token = await AsyncStorage.getItem("token");
-      // console.log('token', token);
+      console.log("token", token);
       if (token) {
-        setIsLogin(true);
+        dispatch({ type: TOKEN, token });
+
+        // setIsLogin(true);
       }
     };
     getToken();
   }, []);
-  
+
   const Root = () => {
     return (
       <Stack.Navigator>
@@ -122,7 +125,7 @@ export default function MainScreen(props) {
     );
   };
 
-  return isLogin ? (
+  return Boolean(isLogin) ? (
     <Drawer.Navigator
       initialRouteName="Home"
       drawerContent={(props) => <CustomDrawer {...props} />}
@@ -256,8 +259,7 @@ export default function MainScreen(props) {
       />
     </Drawer.Navigator>
   ) : (
-    <LoginScreen 
-    />
+    <LoginScreen />
   );
 }
 

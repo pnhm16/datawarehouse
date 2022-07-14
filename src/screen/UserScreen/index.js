@@ -13,11 +13,13 @@ import CustomHeaderStack from "../../components/CustomHeader";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
 import Entypo from "react-native-vector-icons/Entypo";
-
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { compose } from "redux";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-
-
+import { userAction } from "../../store/actions/userAction";
+import { useIsFocused } from "@react-navigation/native";
 const data = [
   {
     id: 1,
@@ -37,8 +39,15 @@ const data = [
   },
 ];
 
-export default function DataScreen(props) {
+function UserScreen(props) {
+  const { userData, onGetCurrentUser } = props;
+
   const [tab, setTab] = useState(0);
+  const isFocused = useIsFocused();
+  React.useEffect(() => {
+    onGetCurrentUser();
+  }, [isFocused]);
+  console.log(userData);
   return (
     <ScrollView style={styles.container}>
       <View style={{ height: 50 }}>
@@ -86,7 +95,7 @@ export default function DataScreen(props) {
                   </View>
                 </View>
               </View>
-              {data.map((item) => {
+              {[userData].map((item) => {
                 return (
                   <TouchableOpacity style={styles.layoutCenter} key={item.id}>
                     <View style={styles.headerTable}>
@@ -97,7 +106,7 @@ export default function DataScreen(props) {
                         />
                       </View>
                       <View style={{ width: "45%" }}>
-                        <Text style={styles.textTab}>{item.name}</Text>
+                        <Text style={styles.textTab}>{item.username}</Text>
                       </View>
                       <View style={{ width: "15%" }}>
                         <Ionicons
@@ -130,6 +139,7 @@ export default function DataScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 50,
   },
   body: {
     flex: 1,
@@ -206,3 +216,18 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
 });
+UserScreen.propTypes = {
+  onGetCurrentUser: PropTypes.func,
+  userData: PropTypes.object,
+};
+
+const mapStateToProps = (state) => ({
+  userData: state.user?.data,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onGetCurrentUser: () => dispatch(userAction()),
+});
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+export default compose(withConnect)(UserScreen);

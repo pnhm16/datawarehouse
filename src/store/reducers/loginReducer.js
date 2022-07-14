@@ -1,11 +1,16 @@
 // action - state management
-import { RESET_ACTION, LOGIN_ACTION, LOGIN_SUCCESS, LOGIN_FAILED } from '../constants/loginConstant';
+import {
+  RESET_ACTION,
+  LOGIN_ACTION,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
+} from "../constants/loginConstant";
 
 export const initialState = {
   data: [],
   loading: false,
   error: false,
-  success: false
+  success: false,
 };
 
 const loginReducer = (state = initialState, action) => {
@@ -16,19 +21,19 @@ const loginReducer = (state = initialState, action) => {
         data: [],
         loading: false,
         error: false,
-        success: false
+        success: false,
       };
     case LOGIN_ACTION:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case LOGIN_SUCCESS:
       return {
         ...state,
         loading: false,
         success: true,
-        data: action.data
+        data: action.data,
       };
     case LOGIN_FAILED:
       return {

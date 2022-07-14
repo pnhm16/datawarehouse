@@ -13,6 +13,11 @@ import CustomHeaderStack from "../../components/CustomHeader";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { useIsFocused } from "@react-navigation/native";
+import { favoriteAction } from "../../store/actions/favoriteAction";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -32,8 +37,16 @@ const data = [
   },
 ];
 
-export default function FavoritesScreen(props) {
+function FavoritesScreen(props) {
   const [tab, setTab] = useState(0);
+  const { favoriteData, onGetFavoriteUser } = props;
+  const isFocused = useIsFocused();
+
+  React.useEffect(() => {
+    onGetFavoriteUser();
+  }, [isFocused]);
+  console.log("favorite", favoriteData);
+
   return (
     <ScrollView style={styles.container}>
       <View style={{ height: 50 }}>
@@ -94,12 +107,15 @@ export default function FavoritesScreen(props) {
               </View>
               {data.map((item) => {
                 return (
-                  <TouchableOpacity style={styles.layoutCenter} key={item.id} 
-                  onPress={() =>
-                    props.navigation.navigate("ItemReport", {
-                      name: item.name,
-                    })
-                  }>
+                  <TouchableOpacity
+                    style={styles.layoutCenter}
+                    key={item.id}
+                    onPress={() =>
+                      props.navigation.navigate("ItemReport", {
+                        name: item.name,
+                      })
+                    }
+                  >
                     <View style={styles.headerTable}>
                       <View style={{ width: "10%" }}>
                         <Image
@@ -128,6 +144,7 @@ export default function FavoritesScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 50,
   },
   body: {
     flex: 1,
@@ -203,3 +220,19 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
 });
+
+FavoritesScreen.propTypes = {
+  onGetFavoriteUser: PropTypes.func,
+  favoriteData: PropTypes.array,
+};
+
+const mapStateToProps = (state) => ({
+  favoriteData: state.favorite?.data,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onGetFavoriteUser: () => dispatch(favoriteAction()),
+});
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+export default compose(withConnect)(FavoritesScreen);

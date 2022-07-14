@@ -1,30 +1,37 @@
-import { put, takeLatest, call, takeEvery } from 'redux-saga/effects';
-import { getWorkspacesSuccess, getWorkspacesFailed } from '../actions/workspacesAction';
-import { GET_WORKSPACES_ACTION } from '../constants/workspacesConstant';
-import request from '../../utils/request';
-import { USERLIST_URL } from '../../urlConfig';
+import { put, takeLatest, call, takeEvery, ge } from "redux-saga/effects";
+import {
+  getWorkspacesSuccess,
+  getWorkspacesFailed,
+} from "../actions/workspacesAction";
+import { GET_WORKSPACES_ACTION } from "../constants/workspacesConstant";
+import API from "../../utils/axios";
+import { hanldeError } from "../../utils/handleError";
+
+import { USERLIST_URL } from "../../urlConfig";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 export function* workspacesDataAction() {
-  const token = yield AsyncStorage.getItem("token");
-  console.log('aaaaalo', token);
   try {
-    const data = yield call(request, `${USERLIST_URL}workspaces/`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-      }
-    });
-    // console.log('data', data);
-    if (data) {
-      AsyncStorage.setItem('workspaces', JSON.stringify(data));
-      yield put(getWorkspacesSuccess(data));
+    const res = yield API.get(`${USERLIST_URL}workspaces/`);
+    console.log({ res });
+    // const data = yield call(request, `${USERLIST_URL}workspaces/`, {
+    //   method: "GET",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+
+    // // console.log('data', data);
+    if (res) {
+      // AsyncStorage.setItem("workspaces", JSON.stringify(data));
+      yield put(getWorkspacesSuccess(res));
     }
   } catch (error) {
-    console.log('error', error);
+    console.log("error", error);
     yield put(getWorkspacesFailed(error));
+    hanldeError(error);
   }
 }
 

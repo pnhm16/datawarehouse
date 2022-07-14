@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { Avatar, Card, Divider } from "react-native-paper";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from "react-redux";
 
 export const CustomDrawer = (props) => {
   const { colors } = useTheme();
@@ -19,6 +20,7 @@ export const CustomDrawer = (props) => {
   // const onLogout = () =>{
 
   // }
+  const dispatch = useDispatch();
 
   const LeftContent = (props) => (
     <Avatar.Image {...props} source={{ uri: props.userInfo?.data.avatar }} />
@@ -46,7 +48,7 @@ export const CustomDrawer = (props) => {
           />
         </Card>
       ) : (
-        <View style={{ ...styles.container}}>
+        <View style={{ ...styles.container }}>
           <View style={styles.box1}>
             <View style={styles.inner}>
               <Image
@@ -66,10 +68,8 @@ export const CustomDrawer = (props) => {
           </View>
         </View>
       )}
-      <DrawerItemList
-        {...filteredProps}
-      />
-      <Divider style={{height:1}} />
+      <DrawerItemList {...filteredProps} />
+      <Divider style={{ height: 1 }} />
       <DrawerItem
         label={t("Logout")}
         icon={({ focused }) => {
@@ -84,11 +84,11 @@ export const CustomDrawer = (props) => {
           );
         }}
         onPress={() => {
-          AsyncStorage.clear('token')
-          DevSettings.reload()
+          AsyncStorage.clear("token");
+          // dispatch()
+          DevSettings.reload();
         }}
       />
-      
     </DrawerContentScrollView>
   );
 };

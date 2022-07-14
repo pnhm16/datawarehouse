@@ -5,13 +5,17 @@ import {
   NavigationContainer,
   DefaultTheme as NavDefaultTheme,
 } from "@react-navigation/native";
-import { DefaultTheme, DarkTheme, Provider as PaperProvider } from "react-native-paper";
+import {
+  DefaultTheme,
+  DarkTheme,
+  Provider as PaperProvider,
+} from "react-native-paper";
 import { Provider } from "react-redux";
 import { View } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
-import { store } from './src/store';
+import { store } from "./src/store";
 
 const theme = {
   ...DefaultTheme,
@@ -21,7 +25,7 @@ const theme = {
     ...NavDefaultTheme.colors,
     primary: "#3498db",
     accent: "#f1c40f",
-    background:'#FFF'
+    background: "#FFF",
   },
 };
 
@@ -37,7 +41,7 @@ export default function App() {
         await Font.loadAsync(Entypo.font);
         // Artificially delay for two seconds to simulate a slow loading
         // experience. Please remove this if you copy and paste the code!
-        await setTimeout(()=>{},1000);
+        await setTimeout(() => {}, 1000);
       } catch (e) {
         console.warn(e);
       } finally {
@@ -69,7 +73,7 @@ export default function App() {
       <PaperProvider theme={theme}>
         <NavigationContainer theme={theme}>
           <View onLayout={onLayoutRootView} />
-          <MainScreen/>
+          <MainScreen />
         </NavigationContainer>
       </PaperProvider>
     </Provider>

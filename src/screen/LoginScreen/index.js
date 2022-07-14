@@ -1,10 +1,23 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, Alert, DevSettings, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Alert,
+  DevSettings,
+  ScrollView,
+} from "react-native";
 import React, { useState, useEffect } from "react";
-import { connect, useSelector } from 'react-redux';
-import { compose } from 'redux';
-import PropTypes from 'prop-types';
+import { connect, useSelector } from "react-redux";
+import { compose } from "redux";
+import PropTypes from "prop-types";
 import { TextInput, Divider } from "react-native-paper";
-import { resetAction, loginAction, loginSuccess } from '../../store/actions/loginAction';
+import {
+  resetAction,
+  loginAction,
+  loginSuccess,
+} from "../../store/actions/loginAction";
 import { useTranslation } from "react-i18next";
 
 function LoginScreen(props) {
@@ -15,20 +28,16 @@ function LoginScreen(props) {
   // console.log("props", props)
   useEffect(() => {
     if (loginState.success) {
-      Alert.alert(
-        "Login success"
-      )
-      DevSettings.reload()
-      onReset();
+      Alert.alert("Login success");
+      // DevSettings.reload();
+      // onReset();
     }
   }, [loginState.success]);
 
   useEffect(() => {
     if (loginState.error) {
-      Alert.alert(
-        "Login failed"
-      )
-      onReset();
+      Alert.alert("Login failed");
+      // onReset();
     }
   }, [loginState.error]);
 
@@ -36,7 +45,7 @@ function LoginScreen(props) {
     onLogin({
       userName: userName,
       password: password,
-      isLdap: false
+      isLdap: false,
     });
   };
 
@@ -44,7 +53,7 @@ function LoginScreen(props) {
     <ScrollView style={styles.container}>
       <View style={styles.layout}>
         <Text style={styles.title}>DATA WAREHOUSE</Text>
-        <Text style={styles.subtitle}>{t('Hi, Welcome Back')}</Text>
+        <Text style={styles.subtitle}>{t("Hi, Welcome Back")}</Text>
         <Image
           style={styles.image}
           source={require("../../asset/images/logo_kse.jpeg")}
@@ -76,11 +85,19 @@ function LoginScreen(props) {
                 alignItems: "center",
               }}
             >
-              {loginState.loading ? 'Loading' : 'Sign in'}
+              {loginState.loading ? "Loading" : "Sign in"}
             </Text>
           </View>
         </TouchableOpacity>
-        <Divider style={{marginBottom:30, marginTop:20, height:1, width: '90%', alignSelf:'center'}}/>
+        <Divider
+          style={{
+            marginBottom: 30,
+            marginTop: 20,
+            height: 1,
+            width: "90%",
+            alignSelf: "center",
+          }}
+        />
         <Text style={styles.textSign}>Don't have an account?</Text>
       </View>
     </ScrollView>
@@ -91,6 +108,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#E3F2FD",
+    paddingTop: 50,
   },
   layout: {
     backgroundColor: "#ffffff",
@@ -152,7 +170,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginRight: 20,
     marginLeft: 20,
-    marginBottom: 30
+    marginBottom: 30,
   },
   buttonSign: {
     backgroundColor: "#673ab7",
@@ -169,16 +187,16 @@ const styles = StyleSheet.create({
 LoginScreen.propTypes = {
   loginState: PropTypes.object,
   onLogin: PropTypes.func,
-  onReset: PropTypes.func
+  onReset: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
-  loginState: state.login
+  loginState: state.login,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onReset: () => dispatch(resetAction()),
-  onLogin: (body) => dispatch(loginAction(body))
+  // onReset: () => dispatch(resetAction()),
+  onLogin: (body) => dispatch(loginAction(body)),
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
