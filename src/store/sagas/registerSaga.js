@@ -14,11 +14,11 @@ import { Register_URL } from "../../urlConfig";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { axiosSetAuthToken } from "../../utils/axios";
 import { hanldeError } from "../../utils/handleError";
-
+import { navigationRef } from "../../helpers/RootNavigation";
 export function* registerActions(action) {
   // console.log(action.body);
   const newBody = {
-    username: action.body.userName,
+    username: action.body.username,
     password: action.body.password,
     email: action.body.email,
     user_info: {
@@ -32,17 +32,18 @@ export function* registerActions(action) {
     const data = yield API.post(Register_URL, newBody);
     if (data) {
       yield put(registerSuccess(data));
+      yield call(() => navigationRef.navigate("LoginScreen"));
     }
   } catch (error) {
     console.log("error", error);
-    hanldeError(error);
+    // hanldeError(error);
 
     yield put(registerFailed(error));
   }
 }
 
-export default function* LoginSaga() {
-  yield takeLatest(register_ACTION, registerSuccess);
+export default function* RegisterSaga() {
+  yield takeLatest(register_ACTION, registerActions);
   yield takeLatest(register_SUCCESS, registerSuccess);
   yield takeLatest(register_FAILED, registerFailed);
 

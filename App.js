@@ -16,6 +16,7 @@ import { Entypo } from "@expo/vector-icons";
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import { store } from "./src/store";
+import { navigationRef } from "./src/helpers/RootNavigation";
 
 const theme = {
   ...DefaultTheme,
@@ -71,7 +72,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <PaperProvider theme={theme}>
-        <NavigationContainer theme={theme}>
+        <NavigationContainer theme={theme} ref={navigationRef}>
           <View onLayout={onLayoutRootView} />
           <MainScreen />
         </NavigationContainer>

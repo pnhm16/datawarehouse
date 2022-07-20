@@ -1,3 +1,3 @@
-export const register_ACTION = "app/register/LOGIN_ACTION";
-export const register_SUCCESS = "app/register/LOGIN_SUCCESS";
-export const register_FAILED = "app/register/LOGIN_FAILED";
+export const register_ACTION = "app/register/register_ACTION";
+export const register_SUCCESS = "app/register/register_SUCCESS";
+export const register_FAILED = "app/register/register_FAILED";
