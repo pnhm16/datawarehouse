@@ -19,12 +19,17 @@ import {
   loginSuccess,
 } from "../../store/actions/loginAction";
 import { useTranslation } from "react-i18next";
+import { useNavigation } from "@react-navigation/native";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 function LoginScreen(props) {
   const { t } = useTranslation();
   const { onLogin, loginState, onReset } = props;
+  const navigation = useNavigation();
   const [userName, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [isPasswordSecure, setIsPasswordSecure] = useState(true);
+
   // console.log("props", props)
   useEffect(() => {
     if (loginState.success) {
@@ -71,8 +76,24 @@ function LoginScreen(props) {
           label="Password"
           value={password}
           mode="outlined"
-          secureTextEntry={true}
+          secureTextEntry={isPasswordSecure}
           onChangeText={(password) => setPassword(password)}
+          right={
+            <TextInput.Icon
+              name={() => (
+                <MaterialCommunityIcons
+                  name={isPasswordSecure ? "eye-off" : "eye"}
+                  size={28}
+                  color={"black"}
+                />
+              )} // where <Icon /> is any component from vector-icons or anything else
+              onPress={() => {
+                isPasswordSecure
+                  ? setIsPasswordSecure(false)
+                  : setIsPasswordSecure(true);
+              }}
+            />
+          }
         />
         <Text style={styles.forgot}>Forgot Password?</Text>
         <TouchableOpacity onPress={onSubmit}>
@@ -98,7 +119,9 @@ function LoginScreen(props) {
             alignSelf: "center",
           }}
         />
-        <Text style={styles.textSign}>Don't have an account?</Text>
+        <TouchableOpacity onPress={() => navigation.navigate("RegisterScreen")}>
+          <Text style={styles.textSign}>Don't have an account?</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -160,7 +183,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     backgroundColor: "#fff",
     width: "90%",
-    height: 46,
+    // height: 50,
     marginBottom: 15,
   },
   forgot: {

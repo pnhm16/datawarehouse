@@ -23,16 +23,18 @@ export default function NewReportScreen(props) {
         <View style={styles.title}>
           <Text style={styles.textTitle}>Create a new report</Text>
         </View>
-        <TouchableOpacity style={styles.layoutCreateReport} onPress={()=>{}}>
+        <TouchableOpacity style={styles.layoutCreateReport} onPress={() => {}}>
           <View style={styles.imageCreateReport}>
             <Image
               style={styles.imageItem1}
               source={require("../../asset/images/icon_add_data.png")}
             />
           </View>
-          <Text style={styles.textCreateReport}>Paste or manually enter data</Text>
+          <Text style={styles.textCreateReport}>
+            Paste or manually enter data
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.layoutCreateReport} onPress={()=>{}}>
+        <TouchableOpacity style={styles.layoutCreateReport} onPress={() => {}}>
           <View style={styles.imageCreateReport}>
             <Image
               style={styles.imageItem}
@@ -49,6 +51,7 @@ export default function NewReportScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 50,
   },
   body: {
     flex: 1,
@@ -89,7 +92,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "center",
-    paddingTop: 20
+    paddingTop: 20,
   },
   textCreateReport: {
     fontSize: 16,

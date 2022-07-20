@@ -18,7 +18,7 @@ export function* datasetsDataAction() {
       yield put(getDatasetsSuccess(data));
     }
   } catch (error) {
-    hanldeError(error);
+    // hanldeError(error);
 
     yield put(getDatasetsFailed(error));
   }

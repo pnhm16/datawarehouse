@@ -28,6 +28,7 @@ import WorkspaceScreen from "./Workspace";
 import NewDataset from "./NewDataset";
 import { useDispatch, useSelector } from "react-redux";
 import { TOKEN } from "../store/constants/loginConstant";
+import RegisterScreen from "./RegisterScreen";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -259,10 +260,32 @@ export default function MainScreen(props) {
       />
     </Drawer.Navigator>
   ) : (
-    <LoginScreen />
+    <AuthScreen />
   );
 }
 
+const AuthScreen = () => {
+  const Stack = createNativeStackNavigator();
+
+  return (
+    <Stack.Navigator initialRouteName="LoginScreen">
+      <Stack.Screen
+        name="LoginScreen"
+        options={{
+          headerShown: false,
+        }}
+        component={LoginScreen}
+      />
+      <Stack.Screen
+        name="RegisterScreen"
+        options={{
+          headerShown: false,
+        }}
+        component={RegisterScreen}
+      />
+    </Stack.Navigator>
+  );
+};
 function DetailsScreen() {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>

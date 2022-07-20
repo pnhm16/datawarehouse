@@ -5,6 +5,7 @@ import WorkspacesSaga from "./sagas/workspacesSaga";
 import datasetsSaga from "./sagas/datasetsSaga";
 import userSaga from "./sagas/userSaga";
 import favoriteSaga from "./sagas/favoriteSaga";
+import registerSaga from "./sagas/registerSaga";
 
 export default function* rootSaga() {
   yield all([
@@ -14,5 +15,6 @@ export default function* rootSaga() {
     fork(WorkspacesSaga),
     fork(userSaga),
     fork(favoriteSaga),
+    fork(registerSaga),
   ]);
 }

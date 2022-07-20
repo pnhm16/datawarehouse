@@ -5,7 +5,12 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "userInterfaceStyle": "automatic",
+
+    "android": {
+      "package": "com.dataapp"
+    }
   },
   "name": "data-app"
 }

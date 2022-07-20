@@ -23,7 +23,7 @@ export function* favoritesAction() {
     }
   } catch (error) {
     console.log("error", error);
-    hanldeError(error);
+    // hanldeError(error);
 
     yield put(favoriteFailed(error));
   }
