@@ -32,8 +32,9 @@ import {
   CLEAR_SHARED_DATASETS,
   SHARE_DATASET,
   SHARE_DATASET_FAILED,
-  SHARE_DATASET_SUCCESS
-} from '../constants/datasetsConstant';
+  SHARE_DATASET_SUCCESS,
+  DATASETS_UPLOAD,
+} from "../constants/datasetsConstant";
 
 export const initialState = {
   datasetsData: [],
@@ -59,28 +60,34 @@ export const initialState = {
   shareError: false,
   shareSuccess: false,
   shareDataError: false,
-  shareDataSuccess: false
+  shareDataSuccess: false,
+  dataUploadLocal: [],
 };
 
 const datasetsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case DATASETS_UPLOAD:
+      return {
+        ...state,
+        dataUploadLocal: action.data,
+      };
     case GET_DATASETS_ACTION:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case GET_DATASETS_SUCCESS:
       return {
         ...state,
         loading: false,
         success: true,
-        datasetsData: action.data
+        datasetsData: action.data,
       };
     case GET_DATASETS_FAILED:
       return {
         ...state,
         loading: false,
-        error: true
+        error: true,
       };
     case CLEAR_DATASETS:
       return {
@@ -88,25 +95,25 @@ const datasetsReducer = (state = initialState, action) => {
         datasetsData: [],
         loading: false,
         error: false,
-        success: false
+        success: false,
       };
     // create
     case CREATE_DATASETS:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case CREATE_DATASETS_SUCCESS:
       return {
         ...state,
         loading: false,
-        createSuccess: true
+        createSuccess: true,
       };
     case CREATE_DATASETS_FAILED:
       return {
         ...state,
         loading: false,
-        createError: true
+        createError: true,
       };
     case RESET_DATASETS:
       return {
@@ -121,26 +128,26 @@ const datasetsReducer = (state = initialState, action) => {
         deleteError: false,
         deleteSuccess: false,
         shareDataError: false,
-        shareDataSuccess: false
+        shareDataSuccess: false,
       };
     // get current datasets
     case GET_CURRENT_DS_ACTION:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case GET_CURRENT_DS_SUCCESS:
       return {
         ...state,
         loading: false,
         currSuccess: true,
-        currDatasets: action.data
+        currDatasets: action.data,
       };
     case GET_CURRENT_DS_FAILED:
       return {
         ...state,
         loading: false,
-        currError: true
+        currError: true,
       };
     case CLEAR_CURRENT_DS:
       return {
@@ -148,26 +155,26 @@ const datasetsReducer = (state = initialState, action) => {
         currDatasets: [],
         loading: false,
         currError: false,
-        currSuccess: false
+        currSuccess: false,
       };
     // get dataset detail
     case GET_DS_DETAIL:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case GET_DS_DETAIL_SUCCESS:
       return {
         ...state,
         loading: false,
         success: true,
-        dsDetail: action.data
+        dsDetail: action.data,
       };
     case GET_DS_DETAIL_FAILED:
       return {
         ...state,
         loading: false,
-        detailError: true
+        detailError: true,
       };
     case CLEAR_DS_DETAIL:
       return {
@@ -175,64 +182,64 @@ const datasetsReducer = (state = initialState, action) => {
         dsDetail: [],
         loading: false,
         detailError: false,
-        currSuccess: false
+        currSuccess: false,
       };
     // edit dataset
     case EDIT_DATASETS:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case EDIT_DATASETS_SUCCESS:
       return {
         ...state,
         loading: false,
         editSuccess: true,
-        dsDetail: action.data
+        dsDetail: action.data,
       };
     case EDIT_DATASETS_FAILED:
       return {
         ...state,
         loading: false,
-        editError: true
+        editError: true,
       };
     // delete dataset
     case DELETE_DATASETS:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case DELETE_DATASETS_SUCCESS:
       return {
         ...state,
         loading: false,
         deleteSuccess: true,
-        dsDetail: []
+        dsDetail: [],
       };
     case DELETE_DATASETS_FAILED:
       return {
         ...state,
         loading: false,
-        deleteError: true
+        deleteError: true,
       };
     // get data upload
     case GET_DATA_UPLOAD:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case GET_DATA_UPLOAD_SUCCESS:
       return {
         ...state,
         loading: false,
         uploadSuccess: true,
-        dataUpload: action.data
+        dataUpload: action.data,
       };
     case GET_DATA_UPLOAD_FAILED:
       return {
         ...state,
         loading: false,
-        uploadError: true
+        uploadError: true,
       };
     case CLEAR_DATA_UPLOAD:
       return {
@@ -240,26 +247,26 @@ const datasetsReducer = (state = initialState, action) => {
         dataUpload: [],
         loading: false,
         uploadError: false,
-        uploadSuccess: false
+        uploadSuccess: false,
       };
     // get shared datasets
     case GET_SHARED_DATASETS:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case GET_SHARED_DATASETS_SUCCESS:
       return {
         ...state,
         loading: false,
         shareSuccess: true,
-        dataShared: action.data
+        dataShared: action.data,
       };
     case GET_SHARED_DATASETS_FAILED:
       return {
         ...state,
         loading: false,
-        shareError: true
+        shareError: true,
       };
     case CLEAR_SHARED_DATASETS:
       return {
@@ -267,26 +274,26 @@ const datasetsReducer = (state = initialState, action) => {
         dataShared: [],
         loading: false,
         shareError: false,
-        shareSuccess: false
+        shareSuccess: false,
       };
     // share dataset
     case SHARE_DATASET:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case SHARE_DATASET_SUCCESS:
       return {
         ...state,
         loading: false,
         shareDataSuccess: true,
-        dsDetail: action.data
+        dsDetail: action.data,
       };
     case SHARE_DATASET_FAILED:
       return {
         ...state,
         loading: false,
-        shareDataError: true
+        shareDataError: true,
       };
     default:
       return state;

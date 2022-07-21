@@ -14,21 +14,32 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
 import Entypo from "react-native-vector-icons/Entypo";
 import PropTypes from "prop-types";
-import { getDatasetsAction } from "../../store/actions/datasetAction";
-import { connect } from "react-redux";
+import {
+  DataUploadLocal,
+  getDatasetsAction,
+} from "../../store/actions/datasetAction";
+import { connect, useDispatch } from "react-redux";
 import { compose } from "redux";
 import { useIsFocused } from "@react-navigation/native";
+import { FlatList } from "react-native-gesture-handler";
+import { paginate } from "../../utils/handleError";
+import { useCallback } from "react";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
+function parseData(data) {
+  if (!data) return {};
+  if (typeof data === "object") return data;
+  if (typeof data === "string") return JSON.parse(JSON.stringify(data));
 
+  return {};
+}
 function DataScreen(props) {
   // console.log('props', props);
-  const { datasets, onGetDatasetsData } = props;
+  const { datasets, onGetDatasetsData, datasetsLocal } = props;
   // const { datasetsData } = datasets;
   // const { t } = useTranslation();
   const isFocused = useIsFocused();
-
   useEffect(() => {
     onGetDatasetsData();
     // console.log(datasetsData);
@@ -53,7 +64,9 @@ function DataScreen(props) {
   ];
 
   const [tab, setTab] = useState(0);
+  const dispatch = useDispatch();
   // console.log("props.navigation", props.navigation);
+
   return (
     <ScrollView style={styles.container}>
       <View style={{ height: 50 }}>
@@ -112,41 +125,63 @@ function DataScreen(props) {
                       color="#673ab7"
                     />
                   </View>
-                  <View style={{ width: "45%" }}>
+                  <View style={{ width: "35%" }}>
+                    <Text style={styles.textTab}>Product</Text>
+                  </View>
+                  <View style={{ width: "30%" }}>
                     <Text style={styles.textTab}>Name</Text>
                   </View>
-                  <View style={{ width: "45%" }}>
-                    <Text style={styles.textTab}>Endorsement</Text>
+                  <View style={{ width: "25%" }}>
+                    <Text style={styles.textTab}>ReviewStar</Text>
                   </View>
                 </View>
               </View>
 
-              {datasets && datasets.length ? (
+              {datasetsLocal?.data && datasetsLocal?.data.length ? (
                 <>
-                  {datasets.map((item) => {
-                    console.log({ item });
-                    return (
-                      <TouchableOpacity
-                        style={styles.layoutCenter}
-                        key={item.id}
-                      >
-                        <View style={styles.headerTable}>
-                          <View style={{ width: "10%" }}>
-                            <Image
-                              style={styles.imageItem}
-                              source={require("../../asset/images/icon_data_square.png")}
-                            />
+                  <FlatList
+                    data={datasetsLocal.data}
+                    keyExtractor={(item, index) => index.toString()}
+                    showsVerticalScrollIndicator={false}
+                    onEndReachedThreshold={0.5}
+                    onRefresh={async () => {
+                      // await setIsRefreshing(true);
+                      // onGetJobListWish({ ...param, page: 1 });
+                    }}
+                    // onEndReached={handleOnEndReached}
+                    renderItem={(item, index) => {
+                      return (
+                        <TouchableOpacity
+                          style={styles.layoutCenter}
+                          key={item.id}
+                        >
+                          <View style={styles.headerTable}>
+                            <View style={{ width: "10%" }}>
+                              <Image
+                                style={styles.imageItem}
+                                source={require("../../asset/images/icon_data_square.png")}
+                              />
+                            </View>
+                            <View style={{ width: "35%" }}>
+                              <Text style={styles.textTab}>
+                                {item.item.Product}
+                              </Text>
+                            </View>
+                            <View style={{ width: "45%" }}>
+                              <Text style={styles.textTab}>
+                                {item.item.ReviewTitle}
+                              </Text>
+                            </View>
+                            <View style={{ width: "45%" }}>
+                              <Text style={styles.textTab}>
+                                {item.item.ReviewStar}
+                              </Text>
+                            </View>
                           </View>
-                          <View style={{ width: "45%" }}>
-                            <Text style={styles.textTab}>{item.name}</Text>
-                          </View>
-                          <View style={{ width: "45%" }}>
-                            <Text style={styles.textTab}></Text>
-                          </View>
-                        </View>
-                      </TouchableOpacity>
-                    );
-                  })}
+                        </TouchableOpacity>
+                      );
+                    }}
+                  />
                 </>
               ) : null}
             </View>
@@ -166,7 +201,6 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 10,
     borderRadius: 20,
-    height: windowHeight,
     backgroundColor: "#E3F2FD",
   },
   title: {
@@ -198,6 +232,7 @@ const styles = StyleSheet.create({
   textTab: {
     fontSize: 12,
     margin: 10,
+    textAlign: "center",
   },
   searchSection: {
     flexDirection: "row",
@@ -255,6 +290,7 @@ DataScreen.propTypes = {
 
 const mapStateToProps = (state) => ({
   datasets: state.datasets?.datasetsData,
+  datasetsLocal: state.datasets?.dataUploadLocal,
 });
 
 const mapDispatchToProps = (dispatch) => ({

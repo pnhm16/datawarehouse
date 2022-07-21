@@ -9,11 +9,21 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import CustomHeaderStack from "../../components/CustomHeader";
-
+import * as DocumentPicker from "expo-document-picker";
+import * as FileSystem from "expo-file-system";
+import { useDispatch } from "react-redux";
+import { DataUploadLocal } from "../../store/actions/datasetAction";
+import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-
+import API from "../../utils/axios";
+import { Buffer } from "buffer";
 export default function NewReportScreen(props) {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const { t } = useTranslation();
+
   return (
     <ScrollView style={styles.container}>
       <View style={{ height: 50 }}>
@@ -32,7 +42,32 @@ export default function NewReportScreen(props) {
             </View>
             <Text style={styles.textCreateReport}>Paste or manually enter data</Text>
           </TouchableOpacity> */}
-        <TouchableOpacity style={styles.layoutCreateReport} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.layoutCreateReport}
+          onPress={() => {
+            DocumentPicker.getDocumentAsync({ type: "application/json" })
+              .then((response) => {
+                console.log(response);
+
+                FileSystem.readAsStringAsync(response?.uri, {
+                  encoding: FileSystem.EncodingType.UTF8,
+                })
+                  .then((response) => {
+                    dispatch(
+                      DataUploadLocal({
+                        data: JSON.parse(response).slice(0, 100),
+                      })
+                    );
+                    navigation.navigate(t("Dataset"));
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+                //
+              })
+              .catch((error) => {});
+          }}
+        >
           <View style={styles.imageCreateReport}>
             <Image
               style={styles.imageItem}
