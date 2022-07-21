@@ -1,6 +1,15 @@
 ## I. How to start
-* yarn install
+
+- yarn install
+
 ### 1. Run instructions for Android:
-* yarn android
+
+- yarn android
+
 ### 2.Run instructions for iOS:
-* yarn ios
+
+- yarn ios
+
+### 3.library document-picker:
+
+- https://docs.expo.dev/versions/latest/sdk/document-picker/
