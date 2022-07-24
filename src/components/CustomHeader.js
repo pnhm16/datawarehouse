@@ -3,12 +3,26 @@ import Entypo from "react-native-vector-icons/Entypo";
 import Feather from "react-native-vector-icons/Feather";
 import React from "react";
 import { Avatar } from "react-native-paper";
+import { DrawerActions } from "@react-navigation/native";
+import { navigationRef, openDrawer } from "../helpers/RootNavigation";
 
-export default function CustomHeader({ navigation }) {
+export default function CustomHeader({ navigation, onPress }) {
+  console.log(navigation);
   return (
     <View style={styles.container}>
       <View style={styles.layout}>
-        <TouchableOpacity onPress={() => navigation.openDrawer()}>
+        <TouchableOpacity
+          onPress={
+            () =>
+              // navigation.navigate("Root", {
+              //   screen: "Workspaces",
+              // })
+              // navigation.toggleDrawer()
+              // navigation.dispatch(DrawerActions.openDrawer())
+              typeof onPress === "function" ? navigation.goBack() : openDrawer()
+            // console.log(DrawerActions, navigation)
+          }
+        >
           <View style={styles.layoutIcon}>
             <Entypo name="menu" size={25} color="#673AB7" />
           </View>
@@ -21,7 +35,7 @@ export default function CustomHeader({ navigation }) {
         <View style={styles.layoutIcon}>
           <Feather name="bell" size={25} color="#673AB7" />
         </View>
-        <TouchableOpacity onPress={() => navigation.push('Profile')}>
+        <TouchableOpacity onPress={() => navigation.push("Profile")}>
           <Avatar.Image
             size={40}
             source={require("../asset/images/avatar.jpeg")}
@@ -48,10 +62,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginLeft: 5,
     marginRight: 5,
-    flexDirection:'row',
+    flexDirection: "row",
     justifyContent: "center",
     alignContent: "center",
-    height:40,
+    height: 40,
     width: 40,
   },
 });

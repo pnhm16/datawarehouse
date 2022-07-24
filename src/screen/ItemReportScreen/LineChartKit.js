@@ -2,42 +2,7 @@ import { LineChart } from "react-native-chart-kit";
 
 import { View, Text, Dimensions } from "react-native";
 import React from "react";
-
-const data = {
-  labels: [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ],
-  datasets: [
-    {
-      data: [
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-      ],
-      color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})` // optional
-    },
-  ],
-};
+import { useSelector } from "react-redux";
 
 const graphStyle = {
   marginVertical: 8,
@@ -57,6 +22,22 @@ const chartConfig = {
 };
 
 export default function LineChartKit() {
+  const reportData = useSelector((state) => state.reportsReducer.reportData);
+  const data = {
+    labels: ["One Star", "Two Star", "Three Star", "Four Star", "Fine Star"],
+    datasets: [
+      {
+        data: [
+          reportData?.data[0].countStarOne,
+          reportData?.data[0].countStarTwo,
+          reportData?.data[0].countStarThree,
+          reportData?.data[0].countStarFour,
+          reportData?.data[0].countStarFine,
+        ],
+        color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+      },
+    ],
+  };
   return (
     <LineChart
       style={graphStyle}

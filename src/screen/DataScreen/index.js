@@ -66,7 +66,7 @@ function DataScreen(props) {
   const [tab, setTab] = useState(0);
   const dispatch = useDispatch();
   // console.log("props.navigation", props.navigation);
-
+  console.log({ datasetsLocal });
   return (
     <ScrollView style={styles.container}>
       <View style={{ height: 50 }}>
@@ -125,18 +125,15 @@ function DataScreen(props) {
                       color="#673ab7"
                     />
                   </View>
-                  <View style={{ width: "35%" }}>
-                    <Text style={styles.textTab}>Product</Text>
-                  </View>
-                  <View style={{ width: "30%" }}>
+
+                  <View style={{ width: "45%" }}>
                     <Text style={styles.textTab}>Name</Text>
                   </View>
-                  <View style={{ width: "25%" }}>
-                    <Text style={styles.textTab}>ReviewStar</Text>
+                  <View style={{ width: "45%" }}>
+                    <Text style={styles.textTab}>file</Text>
                   </View>
                 </View>
               </View>
-
               {datasetsLocal?.data && datasetsLocal?.data.length ? (
                 <>
                   <FlatList
@@ -162,20 +159,13 @@ function DataScreen(props) {
                                 source={require("../../asset/images/icon_data_square.png")}
                               />
                             </View>
-                            <View style={{ width: "35%" }}>
+                            <View style={{ width: "45%" }}>
                               <Text style={styles.textTab}>
-                                {item.item.Product}
+                                {item.item.name}
                               </Text>
                             </View>
                             <View style={{ width: "45%" }}>
-                              <Text style={styles.textTab}>
-                                {item.item.ReviewTitle}
-                              </Text>
-                            </View>
-                            <View style={{ width: "45%" }}>
-                              <Text style={styles.textTab}>
-                                {item.item.ReviewStar}
-                              </Text>
+                              <Text style={styles.textTab}>{"json"}</Text>
                             </View>
                           </View>
                         </TouchableOpacity>

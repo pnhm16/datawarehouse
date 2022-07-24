@@ -22,7 +22,7 @@ export default function ItemReportScreen(props) {
   return (
     <ScrollView style={styles.container}>
       <View style={{ height: 50 }}>
-        <CustomHeaderStack {...props} />
+        <CustomHeaderStack onPress={() => {}} {...props} />
       </View>
       <View style={styles.body}>
         <View style={styles.title}>

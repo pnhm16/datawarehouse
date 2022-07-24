@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -84,7 +83,143 @@ export default function MainScreen(props) {
 
   const Root = () => {
     return (
-      <Stack.Navigator>
+      <Drawer.Navigator
+        initialRouteName="Home"
+        drawerContent={(props) => <CustomDrawer {...props} />}
+      >
+        <Drawer.Screen
+          name={t("Home")}
+          component={HomeScreen}
+          options={{
+            headerShown: false,
+            drawerIcon: ({ focused }) => (
+              <FontAwesome
+                name="home"
+                size={20}
+                color={focused ? "#673ab7" : "#546E7A"}
+              />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name={t("Favorites")}
+          component={FavoritesScreen}
+          options={{
+            headerShown: false,
+            drawerIcon: ({ focused }) => (
+              <FontAwesome
+                name="heart"
+                size={20}
+                color={focused ? "#673ab7" : "#546E7A"}
+              />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name={t("Recent")}
+          component={RecentScreen}
+          options={{
+            headerShown: false,
+            drawerIcon: ({ focused }) => (
+              <AntDesign
+                name="clockcircleo"
+                size={20}
+                color={focused ? "#673ab7" : "#546E7A"}
+              />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name={t("Dataset")}
+          component={DataScreen}
+          options={{
+            headerShown: false,
+            drawerIcon: ({ focused }) => (
+              <FontAwesome
+                style={{ marginLeft: 3 }}
+                name="database"
+                size={20}
+                color={focused ? "#673ab7" : "#546E7A"}
+              />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name={t("User Management")}
+          component={UserScreen}
+          options={{
+            headerShown: false,
+            drawerIcon: ({ focused }) => (
+              <AntDesign
+                name="user"
+                size={20}
+                color={focused ? "#673ab7" : "#546E7A"}
+              />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name={t("Workspaces")}
+          component={WorkspaceScreen}
+          options={{
+            headerShown: false,
+            drawerIcon: ({ focused }) => (
+              <Feather
+                name="layers"
+                size={20}
+                color={focused ? "#673ab7" : "#546E7A"}
+              />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name={t("Shared")}
+          component={ShareScreen}
+          options={{
+            headerShown: false,
+            drawerIcon: ({ focused }) => (
+              <AntDesign
+                name="sharealt"
+                size={20}
+                color={focused ? "#673ab7" : "#546E7A"}
+              />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name={t("Query")}
+          component={QueryScreen}
+          options={{
+            headerShown: false,
+            drawerIcon: ({ focused }) => (
+              <AntDesign
+                name="codesquareo"
+                size={20}
+                color={focused ? "#673ab7" : "#546E7A"}
+              />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name={t("Setting")}
+          component={SettingScreen}
+          options={{
+            headerShown: false,
+            drawerIcon: ({ focused }) => (
+              <AntDesign
+                name="setting"
+                size={20}
+                color={focused ? "#673ab7" : "#546E7A"}
+              />
+            ),
+          }}
+        />
+      </Drawer.Navigator>
+    );
+  };
+  const dataset = () => {
+    return (
+      <Stack.Navigator initialRouteName="HomeScreen">
         <Stack.Screen
           name="HomeScreen"
           options={{
@@ -125,140 +260,53 @@ export default function MainScreen(props) {
       </Stack.Navigator>
     );
   };
-
   return Boolean(isLogin) ? (
-    <Drawer.Navigator
-      initialRouteName="Home"
-      drawerContent={(props) => <CustomDrawer {...props} />}
-    >
-      <Drawer.Screen
-        name={t("Home")}
+    <Stack.Navigator initialRouteName="Root">
+      <Stack.Screen
+        name="HomeScreen"
+        options={{
+          title: t("Home"),
+          headerShown: false,
+        }}
+        component={HomeScreen}
+      />
+      <Stack.Screen
+        name="Root"
+        options={{
+          headerShown: false,
+        }}
         component={Root}
+      />
+      <Stack.Screen
         options={{
           headerShown: false,
-          drawerIcon: ({ focused }) => (
-            <FontAwesome
-              name="home"
-              size={20}
-              color={focused ? "#673ab7" : "#546E7A"}
-            />
-          ),
         }}
+        name="NewReport"
+        component={NewReportScreen}
       />
-      <Drawer.Screen
-        name={t("Favorites")}
-        component={FavoritesScreen}
+      <Stack.Screen
         options={{
           headerShown: false,
-          drawerIcon: ({ focused }) => (
-            <FontAwesome
-              name="heart"
-              size={20}
-              color={focused ? "#673ab7" : "#546E7A"}
-            />
-          ),
         }}
+        name="Profile"
+        component={ProfileScreen}
       />
-      <Drawer.Screen
-        name={t("Recent")}
-        component={RecentScreen}
+      <Stack.Screen
+        name="ItemReport"
         options={{
           headerShown: false,
-          drawerIcon: ({ focused }) => (
-            <AntDesign
-              name="clockcircleo"
-              size={20}
-              color={focused ? "#673ab7" : "#546E7A"}
-            />
-          ),
         }}
+        component={ItemReportScreen}
       />
-      <Drawer.Screen
-        name={t("Dataset")}
-        component={DataScreen}
+      <Stack.Screen
+        name="NewDataset"
         options={{
           headerShown: false,
-          drawerIcon: ({ focused }) => (
-            <FontAwesome
-              style={{ marginLeft: 3 }}
-              name="database"
-              size={20}
-              color={focused ? "#673ab7" : "#546E7A"}
-            />
-          ),
         }}
+        component={NewDataset}
       />
-      <Drawer.Screen
-        name={t("User Management")}
-        component={UserScreen}
-        options={{
-          headerShown: false,
-          drawerIcon: ({ focused }) => (
-            <AntDesign
-              name="user"
-              size={20}
-              color={focused ? "#673ab7" : "#546E7A"}
-            />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name={t("Workspaces")}
-        component={WorkspaceScreen}
-        options={{
-          headerShown: false,
-          drawerIcon: ({ focused }) => (
-            <Feather
-              name="layers"
-              size={20}
-              color={focused ? "#673ab7" : "#546E7A"}
-            />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name={t("Shared")}
-        component={ShareScreen}
-        options={{
-          headerShown: false,
-          drawerIcon: ({ focused }) => (
-            <AntDesign
-              name="sharealt"
-              size={20}
-              color={focused ? "#673ab7" : "#546E7A"}
-            />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name={t("Query")}
-        component={QueryScreen}
-        options={{
-          headerShown: false,
-          drawerIcon: ({ focused }) => (
-            <AntDesign
-              name="codesquareo"
-              size={20}
-              color={focused ? "#673ab7" : "#546E7A"}
-            />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name={t("Setting")}
-        component={SettingScreen}
-        options={{
-          headerShown: false,
-          drawerIcon: ({ focused }) => (
-            <AntDesign
-              name="setting"
-              size={20}
-              color={focused ? "#673ab7" : "#546E7A"}
-            />
-          ),
-        }}
-      />
-    </Drawer.Navigator>
+      <Stack.Screen name="Filter" component={FilterScreen} />
+    </Stack.Navigator>
   ) : (
     <AuthScreen />
   );

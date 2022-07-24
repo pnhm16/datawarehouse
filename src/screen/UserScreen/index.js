@@ -48,6 +48,7 @@ function UserScreen(props) {
     onGetCurrentUser();
   }, [isFocused]);
   console.log(userData);
+
   return (
     <ScrollView style={styles.container}>
       <View style={{ height: 50 }}>

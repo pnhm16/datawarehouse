@@ -46,6 +46,7 @@ const dataset = [
 export default function HomeScreen(props) {
   const login = useSelector((state) => state.login);
   console.log({ login });
+  console.log({ props });
   return (
     <ScrollView style={styles.container}>
       <View style={{ height: 65 }}>

@@ -17,8 +17,9 @@ import {
   EDIT_REPORTS_SUCCESS,
   DELETE_REPORTS,
   DELETE_REPORTS_FAILED,
-  DELETE_REPORTS_SUCCESS
-} from '../constants/reportsConstant';
+  DELETE_REPORTS_SUCCESS,
+  CREATE_JSON_REPORTS,
+} from "../constants/reportsConstant";
 
 export const initialState = {
   currReports: [],
@@ -35,28 +36,34 @@ export const initialState = {
   editError: false,
   editSuccess: false,
   deleteError: false,
-  deleteSuccess: false
+  deleteSuccess: false,
+  reportData: [],
 };
 
 const reportsReducer = (state = initialState, action) => {
   switch (action.type) {
     // create
+    case CREATE_JSON_REPORTS:
+      return {
+        ...state,
+        reportData: action.data,
+      };
     case CREATE_REPORTS:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case CREATE_REPORTS_SUCCESS:
       return {
         ...state,
         loading: false,
-        createSuccess: true
+        createSuccess: true,
       };
     case CREATE_REPORTS_FAILED:
       return {
         ...state,
         loading: false,
-        createError: true
+        createError: true,
       };
     case RESET_REPORTS:
       return {
@@ -69,26 +76,26 @@ const reportsReducer = (state = initialState, action) => {
         editError: false,
         editSuccess: false,
         deleteError: false,
-        deleteSuccess: false
+        deleteSuccess: false,
       };
     // get current report
     case GET_CURRENT_RP_ACTION:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case GET_CURRENT_RP_SUCCESS:
       return {
         ...state,
         loading: false,
         currSuccess: true,
-        currReports: action.data
+        currReports: action.data,
       };
     case GET_CURRENT_RP_FAILED:
       return {
         ...state,
         loading: false,
-        currError: true
+        currError: true,
       };
     case CLEAR_CURRENT_RP:
       return {
@@ -96,26 +103,26 @@ const reportsReducer = (state = initialState, action) => {
         currReports: [],
         loading: false,
         currError: false,
-        currSuccess: false
+        currSuccess: false,
       };
     // get report detail
     case GET_RP_DETAIL:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case GET_RP_DETAIL_SUCCESS:
       return {
         ...state,
         loading: false,
         success: true,
-        rpDetail: action.data
+        rpDetail: action.data,
       };
     case GET_RP_DETAIL_FAILED:
       return {
         ...state,
         loading: false,
-        detailError: true
+        detailError: true,
       };
     case CLEAR_RP_DETAIL:
       return {
@@ -123,45 +130,45 @@ const reportsReducer = (state = initialState, action) => {
         rpDetail: [],
         loading: false,
         detailError: false,
-        currSuccess: false
+        currSuccess: false,
       };
     // edit report
     case EDIT_REPORTS:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case EDIT_REPORTS_SUCCESS:
       return {
         ...state,
         loading: false,
         editSuccess: true,
-        rpDetail: action.data
+        rpDetail: action.data,
       };
     case EDIT_REPORTS_FAILED:
       return {
         ...state,
         loading: false,
-        editError: false
+        editError: false,
       };
     // delete report
     case DELETE_REPORTS:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case DELETE_REPORTS_SUCCESS:
       return {
         ...state,
         loading: false,
         deleteSuccess: true,
-        rpDetail: []
+        rpDetail: [],
       };
     case DELETE_REPORTS_FAILED:
       return {
         ...state,
         loading: false,
-        deleteError: true
+        deleteError: true,
       };
     default:
       return state;

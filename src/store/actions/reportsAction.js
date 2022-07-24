@@ -16,95 +16,100 @@ import {
   EDIT_REPORTS_SUCCESS,
   DELETE_REPORTS,
   DELETE_REPORTS_FAILED,
-  DELETE_REPORTS_SUCCESS
-} from '../constants/reportsConstant';
+  DELETE_REPORTS_SUCCESS,
+  CREATE_JSON_REPORTS,
+} from "../constants/reportsConstant";
 
 // create report
+export const createReportsJsonAction = (data) => ({
+  type: CREATE_JSON_REPORTS,
+  data,
+});
 export const createReportsAction = (body) => ({
   type: CREATE_REPORTS,
-  body
+  body,
 });
 
 export const createReportsSuccess = () => ({
-  type: CREATE_REPORTS_SUCCESS
+  type: CREATE_REPORTS_SUCCESS,
 });
 
 export const createReportsFailed = (err) => ({
   type: CREATE_REPORTS_FAILED,
-  err
+  err,
 });
 
 export const resetReports = () => ({
-  type: RESET_REPORTS
+  type: RESET_REPORTS,
 });
 
 // get current reports
 export const getCurrentRpAction = (id) => ({
   type: GET_CURRENT_RP_ACTION,
-  id
+  id,
 });
 
 export const getCurrentRpSuccess = (data) => ({
   type: GET_CURRENT_RP_SUCCESS,
-  data
+  data,
 });
 
 export const getCurrentRpFailed = (err) => ({
   type: GET_CURRENT_RP_FAILED,
-  err
+  err,
 });
 
 export const clearCurrenRptAction = () => ({
-  type: CLEAR_CURRENT_RP
+  type: CLEAR_CURRENT_RP,
 });
 
 // get report detail
 export const getRpDetailAction = (id) => ({
   type: GET_RP_DETAIL,
-  id
+  id,
 });
 
 export const getRpDetailSuccess = (data) => ({
   type: GET_RP_DETAIL_SUCCESS,
-  data
+  data,
 });
 
 export const getRpDetailFailed = (err) => ({
   type: GET_RP_DETAIL_FAILED,
-  err
+  err,
 });
 
 export const clearRpDetailAction = () => ({
-  type: CLEAR_RP_DETAIL
+  type: CLEAR_RP_DETAIL,
 });
 
 // edit report
 export const editReportsAction = (body) => ({
   type: EDIT_REPORTS,
-  body
+  body,
 });
 
 export const editReportsSuccess = (data) => ({
   type: EDIT_REPORTS_SUCCESS,
-  data
+  data,
 });
 
 export const editReportsFailed = (err) => ({
   type: EDIT_REPORTS_FAILED,
-  err
+  err,
 });
 
 // delete report
 export const deleteReportsAction = (id) => ({
   type: DELETE_REPORTS,
-  id
+  id,
 });
 
 export const deleteReportsSuccess = () => ({
-  type: DELETE_REPORTS_SUCCESS
+  type: DELETE_REPORTS_SUCCESS,
 });
 
 export const deleteReportsFailed = (err) => ({
   type: DELETE_REPORTS_FAILED,
-  err
+  err,
 });

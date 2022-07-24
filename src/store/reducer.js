@@ -8,6 +8,7 @@ import datasetsReducer from "./reducers/datasetsReducer";
 import userReducer from "./reducers/userReducer";
 import favoriteReducer from "./reducers/favoriteReducer";
 import registerReducer from "./reducers/registerReducer";
+import reportsReducer from "./reducers/reportsReducer";
 
 import token from "./reducers/tokenReducers";
 
@@ -22,6 +23,7 @@ const reducer = combineReducers({
   user: userReducer,
   favorite: favoriteReducer,
   registerReducer,
+  reportsReducer,
 });
 
 export default reducer;

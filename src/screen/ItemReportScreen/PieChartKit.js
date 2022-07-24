@@ -1,44 +1,7 @@
 import { View, Text, Dimensions } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 import React from "react";
-
-const pieChartData = [
-  {
-    name: "Seoul",
-    population: 21500000,
-    color: "#cd762f",
-    legendFontColor: "#7F7F7F",
-    legendFontSize: 15,
-  },
-  {
-    name: "Toronto",
-    population: 2800000,
-    color: "#e7c593",
-    legendFontColor: "#7F7F7F",
-    legendFontSize: 15,
-  },
-  {
-    name: "Beijing",
-    population: 5276123,
-    color: "#692c14",
-    legendFontColor: "#7F7F7F",
-    legendFontSize: 15,
-  },
-  {
-    name: "New York",
-    population: 8538000,
-    color: "#a39964",
-    legendFontColor: "#7F7F7F",
-    legendFontSize: 15,
-  },
-  {
-    name: "Moscow",
-    population: 11920000,
-    color: "#c0ad81",
-    legendFontColor: "#7F7F7F",
-    legendFontSize: 15,
-  },
-];
+import { useSelector } from "react-redux";
 
 const chartConfig = {
   backgroundColor: "#fff",
@@ -57,6 +20,44 @@ const graphStyle = {
 
 const screenWidth = Dimensions.get("window").width;
 export default function PieChartKit() {
+  const reportData = useSelector((state) => state.reportsReducer.reportData);
+  const pieChartData = [
+    {
+      name: "One Star",
+      population: reportData?.data[0].countStarOne,
+      color: "#cd762f",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 12,
+    },
+    {
+      name: "Two Star",
+      population: reportData?.data[0].countStarTwo,
+      color: "#e7c593",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 12,
+    },
+    {
+      name: "Three Star",
+      population: reportData?.data[0].countStarThree,
+      color: "#692c14",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 12,
+    },
+    {
+      name: "Four Star",
+      population: reportData?.data[0].countStarFour,
+      color: "#a39964",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 12,
+    },
+    {
+      name: "Fine Star",
+      population: reportData?.data[0].countStarFine,
+      color: "#c0ad81",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 12,
+    },
+  ];
   return (
     <PieChart
       data={pieChartData}
